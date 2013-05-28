@@ -5,7 +5,7 @@ StructureVariation
 ---------------------------------------------------------------------
 Pindel
 
-      Multi bam files
+      input format: Multi bam files
 
 
 Breakdancer
@@ -13,12 +13,12 @@ Breakdancer
 
 Meerkat
 
-      Single merged bam, Split by Chr
+      input format: Single merged bam, Split by Chr
 
 CORTEX
 
-      Fastq (clean and Corrected)
+      input format: Fastq (clean and Corrected)
 
 CNVnator
 
-      Single merged bam, Split by Chr
+      input format: Single merged bam, Split by Chr
