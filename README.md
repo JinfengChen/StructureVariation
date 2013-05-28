@@ -4,13 +4,13 @@ StructureVariation
 
 	           Input format
 ---------------------------------------------------------------------
-Pindel             Multi bam files
+Pindel                  Multi bam files
 
 
 Breakdancer
 
 
-Meerkat            Single merged bam
+Meerkat                 Single merged bam
                    Split by Chr
 
 CORTEX             Fastq (clean and 
