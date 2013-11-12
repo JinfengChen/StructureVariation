@@ -11,9 +11,9 @@
      1.1.3 qsub seperate.sh to complete the preparation of assmbly afer modify the path and name in scripts
      1.1.4 qsub read2scaff.sh to create readOnscaf and dir of readonscaf, which will be used in validation step 6 (sv_validate_combinator).
    1.3 Lastz
-     1.3.1 generate run lastz script: perl runlastz_soapsv.pl
-     1.3.2 run lastz using qsub-pbs.pl: perl /rhome/cjinfeng/software/bin/qsub-pbs.pl --resource nodes=1:ppn=1,mem=2G,walltime=100:00:00 -convert no -maxjob 20 -line 5 lastz_sv.sh
-     1.3.3 cat lastz_out/*.axt > all.axt by qsub cat.sh 
+     1.3.1 mkdir lastz, which is the directory to run lastz alignment for soapsv
+     1.3.2 generate run lastz script and run qsub: perl runlastz_soapsv.pl
+     1.3.3 cat lastz_sv_out/*.axt > all.axt by qsub cat.sh 
    
 2. Call SV (Finished)
    mkdir process, which is the sv calling directory
@@ -26,14 +26,33 @@
 
 3. Validation
    3.1 SOAP coverage
-   in ref
-   ls /rhome/cjinfeng/HEG4_cjinfeng/MappingReads/bin/MSU7/*.SE > single.list
-   ls /rhome/cjinfeng/HEG4_cjinfeng/MappingReads/bin/MSU7/*.PE > soap.list
-   qsub runcoverage.sh
-   in scaf
+   mkdir cvg
+   cd cvg
+   mkdir ref
+   mkdir scaf
+   
+   cd ref
+   ls /rhome/cjinfeng/BigData/01.Rice_genomes/HEG4/00.SOAP/MSU7/*.SE > single.list
+   ls /rhome/cjinfeng/BigData/01.Rice_genomes/HEG4/00.SOAP/MSU7/*.PE > soap.list
+   qsub -q highmem runcoverage.sh   
+  
+   cd scaf
    ls /rhome/cjinfeng/HEG4_cjinfeng/MappingReads/bin/HEG4_RAW/*.SE > single.list
    ls /rhome/cjinfeng/HEG4_cjinfeng/MappingReads/bin/HEG4_RAW/*.PE > soap.list
-   qsub runcoverage.sh
+   qsub -q highmem runcoverage.sh
    
+   3.2 Validation
+   mkdir sv
+   cd sv
+   cp /rhome/cjinfeng/software/tools/SOAPsv/final/script/sv/*.sh
+    
+   ln -s ../process/HEG4_in* ./
+   awk '{print $1,$3,$4}' HEG4_intro_indels > HEG4_intro_indel.scaflist
+   sed 's/\_//' HEG4_intro_indel.scaflist > HEG4_intro_indel.scaflist.1
 
-      
+   qsub scafcomplex.sh
+ 
+   qsub sv_validation.sh
+
+   bash soapsv2GFF.sh ./validated/BGI_all_confident_indels ./validation/HEG4.soapsv.gff
+
