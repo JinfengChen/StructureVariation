@@ -24,7 +24,7 @@
    sh iter.sh all.axt ../asm/HEG4.fa.fastat HEG4 ../asm/HEG4.fa > run.sh
    qsub -q highmem run.sh
 
-3. Validation
+3. Validation (Finished)
    3.1 SOAP coverage
    mkdir cvg
    cd cvg
@@ -54,5 +54,5 @@
  
    qsub sv_validation.sh
 
-   bash soapsv2GFF.sh ./validated/BGI_all_confident_indels ./validation/HEG4.soapsv.gff
+   bash soapsv2GFF.sh ./validated/BGI_all_confident_indels ./validated/HEG4.soapsv.gff
 
